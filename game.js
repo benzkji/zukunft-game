@@ -101,7 +101,6 @@ function gameBerechnen() {
 
 function stopGame() {
     status = status_stop;
-    level = 1;
     print("stop game!");
     print(geschwindigkeit);
     print(maximaleLandeGeschwindigkeit);
@@ -109,10 +108,11 @@ function stopGame() {
     $info.show();
     $raumschiff.css('bottom', 0);
     if (maximaleLandeGeschwindigkeit<=geschwindigkeit) {
-        $infoTitel.html("Gewonnen!");
         level = level + 1;
+        $infoTitel.html("Gewonnen!");
         $infoText.html("Level " + level);
     } else {
+        level = 1;
         $infoTitel.html("Verloren!")
         $infoText.html("Any key to restart!");
     }
@@ -126,7 +126,7 @@ function startGame() {
     print("starting!£!!");
     raumschiffPosition();
     geschwindigkeit = 0;
-    gravitation=level
+    gravitation = level;
     $info.hide();
     intervalId = setInterval(gameBerechnen, intervalZeit);
 }
