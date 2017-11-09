@@ -84,8 +84,9 @@ function tasteLosgelassen(event) {
         console.log("am laufen!");
         if (taste == 38) {
             print("gas losgelassen!");
+            $fire.hide()
             gas = 0;
-        }
+                                                                                                    }
         if (taste == 39) {
             print("rechts losgelassen!");
             gasRechts = 0;
