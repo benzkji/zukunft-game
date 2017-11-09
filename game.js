@@ -30,6 +30,10 @@ Aufgaben
 - schauen ob das Raumschiff ganz bleibt?
  */
 
+function print(was) {
+    console.log(was);
+}
+
 
 function initial() {
     // wird ganz am anfang ausgeführt
@@ -38,21 +42,24 @@ function initial() {
     $raumschiff.css('left', x);
     $raumschiff.css('bottom', y);
     $raumschiff.show(0);
-    $('body').keydown(tasteGedruckt)
+    $('body').keydown(tasteGedruckt);
 }
 
 
 function tasteGedruckt(event) {
-    console.log(event.which);
-    if (event.which == 20) {
-        console.log("gas!");
-    }
+    // nach oben = 38
+    var taste = event.which;
+    print(event.which);
     if (status == status_stop) {
         status = status_running;
         startGame();
     }
     if (status == status_running) {
         console.log("am laufen!");
+        if (event.which == 38) {
+            print("gas!");
+            gas = 10;
+        }
     }
 }
 
@@ -62,14 +69,17 @@ function gameBerechnen() {
     // console.log('bhop')
     geschwindigkeit = geschwindigkeit - gravitation + gas;
     y = y + geschwindigkeit;
+    print(geschwindigkeit);
     $raumschiff.css('bottom', y);
 }
 
 
 function startGame() {
-    console.log("starting!£!!");
-    intervalId = setInterval(gameBerechnen, 20);
+    print("starting!£!!");
+    intervalId = setInterval(gameBerechnen, 100);
+    $info.hide();
 }
+
 
 
 initial();
