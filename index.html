@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Lunar Lander Version 0.1</title>
+        <style>
+            body {
+                padding: 0;
+                margin: 0;
+                font-family: Arial, sans-serif;
+                font-size: 20px;
+                position: relative;
+            }
+            .info {
+                position: relative;
+                top: 30%;
+                text-align: center
+            }
+            .game {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: aqua;
+            }
+            .raumschiff {
+                display: none;
+                position: absolute;
+                border: 20px solid transparent;
+                border-bottom: 60px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="game">
+            <em class="raumschiff"></em>
+        </div>
+        <div class="info">
+            <h1>Lunar Lander</h1>
+            <p class="infotext">Press any key to start</p>
+        </div>
+        <script src="jquery-3.2.1.js"></script>
+        <script src="game.js"></script>
+    </body>
+</html>
