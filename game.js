@@ -43,13 +43,31 @@ function initial() {
     $raumschiff.css('bottom', y);
     $raumschiff.show(0);
     $('body').keydown(tasteGedruckt);
+    $('body').keyup(tasteLosgelassen);
 }
 
 
 function tasteGedruckt(event) {
     // nach oben = 38
     var taste = event.which;
-    print(event.which);
+    print("gedrückt: " + event.which);
+    if (status == status_stop) {
+        status = status_running;
+        startGame();
+    }
+    if (status == status_running) {
+        if (event.which == 38) {
+            print("gas gedrückt!");
+            gas = 5;
+        }
+    }
+}
+
+
+function tasteLosgelassen(event) {
+    // nach oben = 38
+    var taste = event.which;
+    print("losgelassen: " + event.which);
     if (status == status_stop) {
         status = status_running;
         startGame();
@@ -57,8 +75,8 @@ function tasteGedruckt(event) {
     if (status == status_running) {
         console.log("am laufen!");
         if (event.which == 38) {
-            print("gas!");
-            gas = 10;
+            print("gas losgelassen!");
+            gas = ?;
         }
     }
 }
@@ -69,7 +87,8 @@ function gameBerechnen() {
     // console.log('bhop')
     geschwindigkeit = geschwindigkeit - gravitation + gas;
     y = y + geschwindigkeit;
-    print(geschwindigkeit);
+    print("geschwindigkeit: " + geschwindigkeit);
+    print("position: " + y);
     $raumschiff.css('bottom', y);
 }
 
