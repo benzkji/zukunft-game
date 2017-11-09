@@ -13,10 +13,11 @@ var $raumschiff = $('.raumschiff');
 var hohe = $('body').innerHeight();
 var breite = $('body').innerWidth();
 // werte
+var intervalZeit = 50;
 var gravitation = 1;
 var gas = 0;
 var geschwindigkeit = 0;
-var maximaleLandeGeschwindigkeit = 10;
+var maximaleLandeGeschwindigkeit = -10;
 var intervalId;
 var level = 1;
 
@@ -35,13 +36,18 @@ function print(was) {
 }
 
 
-function initial() {
-    // wird ganz am anfang ausgeführt
+function raumschiffPosition() {
     x = breite * 0.5 - $raumschiff.outerWidth() / 2;
     y = hohe * 0.8;
     $raumschiff.css('left', x);
     $raumschiff.css('bottom', y);
     $raumschiff.show(0);
+}
+
+
+function initial() {
+    // wird ganz am anfang ausge-führt
+    raumschiffPosition();
     $('body').keydown(tasteGedruckt);
     $('body').keyup(tasteLosgelassen);
 }
@@ -58,7 +64,7 @@ function tasteGedruckt(event) {
     if (status == status_running) {
         if (event.which == 38) {
             print("gas gedrückt!");
-            gas = 5;
+            gas = level *4;
         }
     }
 }
@@ -68,15 +74,11 @@ function tasteLosgelassen(event) {
     // nach oben = 38
     var taste = event.which;
     print("losgelassen: " + event.which);
-    if (status == status_stop) {
-        status = status_running;
-        startGame();
-    }
     if (status == status_running) {
         console.log("am laufen!");
         if (event.which == 38) {
             print("gas losgelassen!");
-            gas = ?;
+            gas = 0;
         }
     }
 }
@@ -87,16 +89,46 @@ function gameBerechnen() {
     // console.log('bhop')
     geschwindigkeit = geschwindigkeit - gravitation + gas;
     y = y + geschwindigkeit;
-    print("geschwindigkeit: " + geschwindigkeit);
-    print("position: " + y);
-    $raumschiff.css('bottom', y);
+    // print("geschwindigkeit: " + geschwindigkeit);
+    // print("position: " + y);
+    if (y <= 0) {
+        stopGame();
+    } else {
+        $raumschiff.css('bottom', y);
+    }
+}
+
+
+function stopGame() {
+    status = status_stop;
+    level = 1;
+    print("stop game!");
+    print(geschwindigkeit);
+    print(maximaleLandeGeschwindigkeit);
+    clearInterval(intervalId);
+    $info.show();
+    $raumschiff.css('bottom', 0);
+    if (maximaleLandeGeschwindigkeit<=geschwindigkeit) {
+        $infoTitel.html("Gewonnen!");
+        level = level + 1;
+        $infoText.html("Level " + level);
+    } else {
+        $infoTitel.html("Verloren!")
+        $infoText.html("Any key to restart!");
+    }
+    if (maximaleLandeGeschwindigkeit==geschwindigkeit) {
+        $infoTitel.html("Knapp Gewonnen!")
+    }
 }
 
 
 function startGame() {
     print("starting!£!!");
-    intervalId = setInterval(gameBerechnen, 100);
+    raumschiffPosition();
+    geschwindigkeit = 0;
+    gravitation=level
     $info.hide();
+    intervalId = setInterval(gameBerechnen, intervalZeit);
 }
 
 
