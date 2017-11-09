@@ -62,13 +62,17 @@ function tasteGedruckt(event) {
         startGame();
     }
     if (status == status_running) {
-        if (event.which == 38) {
+        if (taste == 38) {
             print("gas gedrückt!");
             gas = level *4;
         }
+        // nach rechts = 39
+        if (taste == 39) {
+            print("rechts gedrückt!");
+            gasRechts = 5
+        }
     }
 }
-
 
 function tasteLosgelassen(event) {
     // nach oben = 38
@@ -76,9 +80,13 @@ function tasteLosgelassen(event) {
     print("losgelassen: " + event.which);
     if (status == status_running) {
         console.log("am laufen!");
-        if (event.which == 38) {
+        if (taste == 38) {
             print("gas losgelassen!");
             gas = 0;
+        }
+        if (taste == 39) {
+            print("rechts losgelassen!");
+            gasRechts = 0;
         }
     }
 }
