@@ -15,6 +15,7 @@
                 text-align: center
             }
             .game {
+                overflow: hidden;
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -28,11 +29,19 @@
                 border: 20px solid transparent;
                 border-bottom: 60px solid black;
             }
+            .feuer {
+                display: none;
+                position: absolute;
+                bottom: -95px;
+                left: -10px;
+                border: 10px solid transparent;
+                border-top: 20px solid #ff37ce;
+            }
         </style>
     </head>
     <body>
         <div class="game">
-            <em class="raumschiff"></em>
+            <em class="raumschiff"><span class="feuer"></span></em>
         </div>
         <div class="info">
             <h1>Lunar Lander</h1>

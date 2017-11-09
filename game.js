@@ -8,6 +8,7 @@ var $info = $('.info');
 var $infoTitel = $info.find('h1');
 var $infoText = $info.find('p');
 var $raumschiff = $('.raumschiff');
+var $fire = $raumschiff.find('.feuer');
 
 // berechnen
 var hohe = $('body').innerHeight();
@@ -64,6 +65,7 @@ function tasteGedruckt(event) {
     if (status == status_running) {
         if (taste == 38) {
             print("gas gedrückt!");
+            $fire.show();
             gas = level *4;
         }
         // nach rechts = 39
@@ -109,7 +111,6 @@ function gameBerechnen() {
 
 function stopGame() {
     status = status_stop;
-    level = 1;
     print("stop game!");
     print(geschwindigkeit);
     print(maximaleLandeGeschwindigkeit);
@@ -117,10 +118,11 @@ function stopGame() {
     $info.show();
     $raumschiff.css('bottom', 0);
     if (maximaleLandeGeschwindigkeit<=geschwindigkeit) {
-        $infoTitel.html("Gewonnen!");
         level = level + 1;
+        $infoTitel.html("Gewonnen!");
         $infoText.html("Level " + level);
     } else {
+        level = 1;
         $infoTitel.html("Verloren!")
         $infoText.html("Any key to restart!");
     }
@@ -134,7 +136,7 @@ function startGame() {
     print("starting!£!!");
     raumschiffPosition();
     geschwindigkeit = 0;
-    gravitation=level
+    gravitation = level;
     $info.hide();
     intervalId = setInterval(gameBerechnen, intervalZeit);
 }
