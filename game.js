@@ -8,6 +8,7 @@ var $info = $('.info');
 var $infoTitel = $info.find('h1');
 var $infoText = $info.find('p');
 var $raumschiff = $('.raumschiff');
+var $fire = $raumschiff.find('.feuer');
 
 // berechnen
 var hohe = $('body').innerHeight();
@@ -64,6 +65,7 @@ function tasteGedruckt(event) {
     if (status == status_running) {
         if (event.which == 38) {
             print("gas gedrückt!");
+            $fire.show();
             gas = level *4;
         }
     }
