@@ -1,5 +1,4 @@
 
-
 var status_stop = "stopped";
 var status_running = "running";
 var status = status_stop;
@@ -42,7 +41,6 @@ function print(was) {
 function raumschiffPosition() {
     x = breite * 0.5 - $raumschiff.outerWidth() / 2;
     y = hohe * 0.8;
-    print(y);
     $raumschiff.css('left', x);
     $raumschiff.css('bottom', y);
     $raumschiff.show(0);
@@ -60,21 +58,21 @@ function initial() {
 function tasteGedruckt(event) {
     // nach oben = 38
     var taste = event.which;
-    print("gedrueckt: " + event.which);
+    print("gedrückt: " + event.which);
     if (status == status_stop) {
         status = status_running;
         startGame();
     }
     if (status == status_running) {
         if (taste == 38) {
-            print("gas gedrueckt!");
+            print("gas gedrückt!");
             $fire.show();
-            gas = level * 4;
+            gas = level *4;
         }
         // nach rechts = 39
         if (taste == 39) {
-            print("rechts gedrueckt!");
-            gasX = 5
+            print("rechts gedrückt!");
+            gasRechts = 5
         }
     }
 }
@@ -89,19 +87,22 @@ function tasteLosgelassen(event) {
             print("gas losgelassen!");
             $fire.hide()
             gas = 0;
-	}
+                                                                                                    }
         if (taste == 39) {
             print("rechts losgelassen!");
-            gasX = 0;
+            gasRechts = 0;
         }
     }
 }
 
 
 function gameBerechnen() {
-    // position vom raumschiff berechnen
-    // y = ?
-    // schauen wo wir stehen!
+    // position vom raumschiff berechnen?
+    // console.log('bhop')
+    geschwindigkeit = geschwindigkeit - gravitation + gas;
+    y = y + geschwindigkeit;
+    // print("geschwindigkeit: " + geschwindigkeit);
+    // print("position: " + y);
     if (y <= 0) {
         stopGame();
     } else {
