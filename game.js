@@ -18,8 +18,12 @@ var breite = $('body').innerWidth();
 // werte
 var intervalZeit = 50;
 var gravitation = 1;
+var y = 0;
 var gas = 0;
 var geschwindigkeit = 0;
+var x = 0;
+var gasX = 0;
+var geschwindigkeitX = 0;
 var maximaleLandeGeschwindigkeit = -10;
 var intervalId;
 var level = 1;
@@ -62,8 +66,10 @@ function tasteGedruckt(event) {
     var taste = event.which;
     print("gedrueckt: " + event.which);
     if (status == status_stop) {
+        if (taste == 32) {
         status = status_running;
         startGame();
+    	}
     }
     if (status == status_running) {
         if (taste == 38) {
@@ -74,7 +80,11 @@ function tasteGedruckt(event) {
         // nach rechts = 39
         if (taste == 39) {
             print("rechts gedrueckt!");
-            gasX = 5
+            gasX = 10
+        }
+        	if (taste == 37) {
+            print("links gedrueckt!");
+            gasX = -10
         }
     }
 }
@@ -94,6 +104,10 @@ function tasteLosgelassen(event) {
             print("rechts losgelassen!");
             gasX = 0;
         }
+        	if (taste == 37) {
+            print("links losgelassen!");
+            gasX = 0;
+        }
     }
 }
 
@@ -101,16 +115,29 @@ function tasteLosgelassen(event) {
 function gameBerechnen() {
     // position vom raumschiff berechnen
     // y = ?
+    geschwindigkeit = geschwindigkeit - gravitation + gas;
+    y = y + geschwindigkeit
+    print(gasX)
+    geschwindigkeitX = gasX;
+    x = x + gasX
     // schauen wo wir stehen!
-    if (y <= 0) {
-        stopGame();
-    } else {
+    if (!stopGame()) {
         $raumschiff.css('bottom', y);
+        $raumschiff.css('left', x);
     }
 }
 
 
+// stop ja oder nein?
 function stopGame() {
+    var canWin = false;
+    if (x <= 0 || x > breite || y > hohe) {
+    	canWin = false;
+    } else if (y <= 0 ) {
+    	canWin = true;
+    } else {
+    	return false;
+    }
     status = status_stop;
     print("stop game!");
     print(geschwindigkeit);
@@ -118,17 +145,17 @@ function stopGame() {
     clearInterval(intervalId);
     $info.show();
     $raumschiff.css('bottom', 0);
-    if (maximaleLandeGeschwindigkeit<=geschwindigkeit) {
+    if (canWin && maximaleLandeGeschwindigkeit<=geschwindigkeit) {
         level = level + 1;
         $infoTitel.html("Gewonnen!");
-        $infoText.html("Level " + level);
+        $infoText.html("Press space to play -> Level " + level);
+        if (maximaleLandeGeschwindigkeit==geschwindigkeit) {
+            $infoTitel.html("Knapp Gewonnen!")
+        }
     } else {
         level = 1;
         $infoTitel.html("Verloren!")
-        $infoText.html("Any key to restart!");
-    }
-    if (maximaleLandeGeschwindigkeit==geschwindigkeit) {
-        $infoTitel.html("Knapp Gewonnen!")
+        $infoText.html("Press space to play!");
     }
 }
 
@@ -144,4 +171,4 @@ function startGame() {
 
 
 
-initial();
+initial();  
